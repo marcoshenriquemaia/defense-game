@@ -1,0 +1,51 @@
+export const STAGES = [
+  {
+    name: "stage-1",
+    monsters: [
+      {
+        quantity: 100,
+        with: 32,
+        height: 32,
+        color: "green",
+        power: 1,
+        attackSpeed: 1,
+        speed: 0.5,
+        life: 2,
+        initialLife: 2,
+        respawnTime: 1000,
+        reward: 10,
+      },
+      {
+        quantity: 100,
+        with: 32,
+        height: 32,
+        color: "blue",
+        power: 1,
+        attackSpeed: 1,
+        speed: 0.5,
+        life: 3,
+        initialLife: 3,
+        respawnTime: 5000,
+        reward: 20,
+      },
+    ],
+  },
+  {
+    name: "stage-2",
+    monsters: [
+      {
+        quantity: 30,
+        with: 32,
+        height: 32,
+        color: "yellow",
+        power: 1,
+        attackSpeed: 1,
+        speed: 0.1,
+        life: 3,
+        initialLife: 3,
+        respawnTime: 5000,
+        reward: 20,
+      },
+    ],
+  },
+];

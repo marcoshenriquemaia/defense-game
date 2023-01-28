@@ -1,0 +1,71 @@
+#canvas {
+  background-color: #000;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.damage {
+  position: absolute;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: damage 500ms linear forwards;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  font-weight: bold;
+
+  background: url(./assets/damage.png) no-repeat;
+  background-size: cover;
+}
+
+.box-canvas{
+  position: relative;
+  width: fit-content;
+  height: 100%;
+  overflow: hidden;
+}
+
+.money{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: yellow;
+  font-weight: bold;
+  font-size: 20px;
+  z-index: 5;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 50px;
+}
+
+.box-story{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: transparent;
+  border-radius: 8px;
+}
+
+@keyframes damage {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(150%, -150%);
+  }
+}
