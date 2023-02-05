@@ -13,5 +13,5 @@ export const damage = (x, y, amount) => {
 
   setTimeout(() => {
     $damage.remove();
-  }, 500);
+  }, 250);
 };

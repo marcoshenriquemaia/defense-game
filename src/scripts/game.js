@@ -11,13 +11,16 @@ export class World {
     this.monsters = [];
     this.projectiles = [];
     this.stage = STAGES[0];
+
+    this.updateInfo();
   }
 
-  changeStage(index) {
+  changeStage(index, notDraw) {
     this.stage = STAGES[index];
     this.monsters = [];
     this.spawnMonsters();
-    this.draw();
+    !notDraw && this.draw(this.stage.name);
+    this.updateInfo();
   }
 
   spawnMonsters() {
@@ -27,6 +30,7 @@ export class World {
           x: randomNumber(0, this.canvas.width, -500),
           y: randomNumber(0, this.canvas.height, -500),
           ...monster,
+          player: this.player,
         });
 
         this.monsters.push(newMonster);
@@ -35,9 +39,13 @@ export class World {
     });
   }
 
-  draw() {
+  draw(stageName) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.draw(this.context);
+    if (this.player.status === "dead") {
+      this.changeStage(0, true);
+      this.player.alive();
+    }
     this.monsters.forEach((monster) => {
       monster.walkToTheCenter();
       monster.draw(this.context);
@@ -56,12 +64,15 @@ export class World {
           life: monster.initialLife,
           x: randomNumber(0, this.canvas.width, -500),
           y: randomNumber(0, this.canvas.height, -500),
+          player: this.player,
         });
 
-        this.updateMoney(monster.reward);
+        if (monster.murdered) this.updateMoney(monster.reward);
 
         this.monsters.splice(this.monsters.indexOf(monster), 1);
         setTimeout(() => {
+          if (stageName !== this.stage.name) return;
+
           this.monsters.push(newMonster);
         }, newMonster.respawnTime);
       }
@@ -69,7 +80,7 @@ export class World {
 
     const target = this.getCloserMonster();
 
-    this.player.standby = !target;
+    this.player.standby = !target[0];
 
     this.projectiles.forEach((projectile) => {
       projectile.draw(this.context);
@@ -79,7 +90,10 @@ export class World {
     const shoot = this.player.shoot(target);
 
     if (shoot) {
-      this.projectiles.push(shoot);
+      shoot.forEach((projectile) => {
+        if (!projectile) return;
+        this.projectiles.push(projectile);
+      });
     }
 
     this.projectiles.forEach((projectile) => {
@@ -90,49 +104,39 @@ export class World {
   }
 
   update() {
-    this.draw();
+    this.draw(this.stage.name);
     requestAnimationFrame(this.update.bind(this));
   }
 
   getCloserMonster() {
     const monsters = this.monsters;
-    const player = this.player;
 
     const everyMonsterGonnaDie = monsters.every((monster) =>
       monster.gonnaDie(this.projectiles)
     );
 
-    if (everyMonsterGonnaDie) return undefined;
+    if (everyMonsterGonnaDie) return [];
 
-    const closerMonster = monsters.reduce((prev, current) => {
-      if (current.gonnaDie(this.projectiles)) return prev;
+    const closerMonsters = monsters
+      .sort((a, b) => {
+        const aDistance = Math.sqrt(
+          Math.pow(a.x - this.canvas.width / 2, 2) +
+            Math.pow(a.y - this.canvas.height / 2, 2)
+        );
+        const bDistance = Math.sqrt(
+          Math.pow(b.x - this.canvas.width / 2, 2) +
+            Math.pow(b.y - this.canvas.height / 2, 2)
+        );
 
-      const xPlayerPosition = this.canvas.width / 2 - player.width / 2;
+        if (aDistance < bDistance) return 1;
+        if (aDistance > bDistance) return -1;
 
-      const yPlayerPosition = this.canvas.height / 2 - player.height / 2;
+        return 0;
+      })
+      .filter((monster) => !monster.gonnaDie(this.projectiles))
+      .reverse();
 
-      const xMonsterPosition = Math.abs(prev.x);
-      const yMonsterPosition = Math.abs(prev.y);
-
-      const prevDistance = Math.sqrt(
-        Math.pow(xPlayerPosition - xMonsterPosition, 2) +
-          Math.pow(yPlayerPosition - yMonsterPosition, 2)
-      );
-
-      const xCurrentMonsterPosition = Math.abs(current.x);
-      const yCurrentMonsterPosition = Math.abs(current.y);
-
-      const currentDistance = Math.sqrt(
-        Math.pow(xPlayerPosition - xCurrentMonsterPosition, 2) +
-          Math.pow(yPlayerPosition - yCurrentMonsterPosition, 2)
-      );
-
-      return prevDistance > currentDistance ? current : prev;
-    }, monsters[0]);
-
-    if (closerMonster.gonnaDie(this.projectiles)) return undefined;
-
-    return closerMonster;
+    return closerMonsters;
   }
 
   updateMoney(money) {
@@ -144,5 +148,24 @@ export class World {
       newPrice: this.player.money,
       duration: 300,
     });
+  }
+
+  updateInfo() {
+    const $life = document.querySelector(".info-life");
+    const $attack = document.querySelector(".info-attack");
+    const $speed = document.querySelector(".info-speed");
+    const $reward = document.querySelector(".info-reward");
+    const $name = document.querySelector(".info-name");
+
+    $life.textContent = "Life:" + Math.ceil(this.stage.monsters[0].life);
+    $attack.textContent = "Attack:" + this.stage.monsters[0].power;
+    $speed.textContent = "Speed:" + this.stage.monsters[0].speed.toFixed(2);
+    $reward.textContent =
+      "Reward:" +
+      this.stage.monsters[0].reward.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+    $name.textContent = "Name:" + this.stage.name;
   }
 }

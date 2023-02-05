@@ -14,6 +14,7 @@ export class Monster {
     initialLife = 100,
     respawnTime = 1000,
     reward = 10,
+    player,
   }) {
     this.width = width;
     this.height = height;
@@ -29,6 +30,8 @@ export class Monster {
     this.initialLife = initialLife;
     this.respawnTime = respawnTime;
     this.reward = reward;
+    this.murdered = false;
+    this.player = player;
   }
 
   spawn(context) {
@@ -58,16 +61,8 @@ export class Monster {
     }
   }
 
-  receiveDamage(player) {
-    this.life -= player.power;
-    this.color = "red";
-    setTimeout(() => {
-      this.color = "green";
-    }, 100);
-  }
-
   explode(player) {
-    player.life -= this.power;
+    player.receiveDamage(this.power);
     this.status = "dead";
 
     this.explosionEffect();
@@ -95,6 +90,7 @@ export class Monster {
 
     if (xIsOnCenter && yIsOnCenter) {
       this.status = "dead";
+      this.player.receiveDamage(this.power);
     }
   }
 

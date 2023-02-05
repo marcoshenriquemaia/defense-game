@@ -10,23 +10,31 @@
   </head>
   <body>
     <div>
-      <h1>Defense game</h1>
-      <ul class="stages">
-        <li class="stage-item">
-          <button class="stage-button-1">Stage 1</button>
-        </li>
-        <li class="stage-item">
-          <button class="stage-button">Stage 2</button>
-        </li>
-        <li class="stage-item">
-          <button class="stage-button">Stage 3</button>
-        </li>
-      </ul>
+      <ul class="stages"></ul>
       <div class="box-canvas">
         <h2 class="money">R$ 0,00</h2>
         <canvas id="canvas" width="800" height="800"></canvas>
         <div class="box-story">
           <button class="button button-speed">Speed: R$ 0,00</button>
+          <button class="button button-power">Attack: R$ 0,00</button>
+          <button class="button button-gun">Gun: R$ 0,00</button>
+          <button class="button button-life-steal">
+            Life Steal: 0% R$ 0,00
+          </button>
+          <button class="button button-life">Life: 100 R$ 0,00</button>
+        </div>
+        <div class="info">
+          <h2 class="info-name">Stage: 1</h2>
+          <ul>
+            <li class="info-life">Life: 14</li>
+            <li class="info-reward">Reward: R$ 0,00</li>
+            <li class="info-speed">Speed: 1</li>
+            <li class="info-attack">Attack: 1</li>
+          </ul>
+        </div>
+        <div class="life">
+          <span class="life-quantity">500</span>
+          <div class="life-bar"></div>
         </div>
       </div>
     </div>

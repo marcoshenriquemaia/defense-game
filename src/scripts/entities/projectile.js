@@ -3,8 +3,8 @@ import { between } from "../utils/between.js";
 
 export class Projectile {
   constructor({ x, y, color, power, speed, target, context }) {
-    this.width = 10;
-    this.height = 10;
+    this.width = 5;
+    this.height = 5;
     this.color = color;
     this.x = x;
     this.y = y;
@@ -16,6 +16,7 @@ export class Projectile {
     this.lifeTime = Date.now() + 5000;
     this.id = Math.random();
     this.context = context;
+    this.player = target.player;
   }
 
   spawn(context) {
@@ -60,11 +61,13 @@ export class Projectile {
       target.life -= this.power;
       this.printDamage(this.context);
       this.status = "dead";
+      this.player.heal(this.player.power * this.player.lifeSteal);
     }
   }
 
   printDamage(context) {
     if (this.target.life <= 0) {
+      this.target.murdered = true;
       damage(this.target.x, this.target.y, this.power, context);
     }
     if (
