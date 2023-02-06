@@ -13,6 +13,10 @@ const $lifeButton = document.querySelector(".button-life");
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
+canvas.width = window.outerWidth;
+canvas.height =
+  window.outerWidth > 1024 ? window.innerHeight - 100 : window.outerHeight;
+
 const getSpeedPrice = (speed) => {
   return Math.pow(speed * SPEED_PRICE, 2);
 };
@@ -33,9 +37,9 @@ const world = new World({
   context,
 });
 
-const GUN_PRICE = 10000;
-const POWER_PRICE = 250;
-const SPEED_PRICE = 2;
+const GUN_PRICE = 50000;
+const POWER_PRICE = 100;
+const SPEED_PRICE = 3;
 const LIFE_STEAL_VALUE = Number((player.lifeSteal * 100 * 200).toFixed(2));
 const LIFE_PRICE = 10;
 
@@ -84,8 +88,8 @@ $speedButton.addEventListener("click", () => {
 });
 
 $powerButton.addEventListener("click", () => {
-  if (player.money >= player.power * POWER_PRICE) {
-    player.money -= player.power * POWER_PRICE;
+  if (player.money >= Math.pow(player.power * POWER_PRICE, 1.2)) {
+    player.money -= Math.pow(player.power * POWER_PRICE, 1.2);
     player.power += 1;
   }
 
@@ -95,8 +99,9 @@ $powerButton.addEventListener("click", () => {
     duration: 300,
   });
 
-  $powerButton.innerHTML = `Power: ${player.power} ${(
-    player.power * POWER_PRICE
+  $powerButton.innerHTML = `Power: ${player.power} ${Math.pow(
+    player.power * POWER_PRICE,
+    1.2
   ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 });
 
@@ -158,8 +163,9 @@ $speedButton.innerHTML = `Speed: ${player.attackSpeed} ${getSpeedPrice(
   player.attackSpeed
 ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 
-$powerButton.innerHTML = `Power: ${player.power} ${(
-  player.power * POWER_PRICE
+$powerButton.innerHTML = `Power: ${player.power} ${Math.pow(
+  player.power * POWER_PRICE,
+  1.2
 ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 
 $gunButton.innerHTML = `Guns: ${player.gunsQuantity} ${(
@@ -171,9 +177,9 @@ $money.innerHTML = player.money.toLocaleString("pt-BR", {
   currency: "BRL",
 });
 
-$lifeStealButton.innerHTML = `Life Steal: ${
-  player.lifeSteal
-} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
+$lifeStealButton.innerHTML = `Life Steal: ${player.lifeSteal.toFixed(
+  1
+)} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
   style: "currency",
   currency: "BRL",
 })}`;

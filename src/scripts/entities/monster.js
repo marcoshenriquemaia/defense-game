@@ -15,6 +15,7 @@ export class Monster {
     respawnTime = 1000,
     reward = 10,
     player,
+    boss = false,
   }) {
     this.width = width;
     this.height = height;
@@ -32,6 +33,7 @@ export class Monster {
     this.reward = reward;
     this.murdered = false;
     this.player = player;
+    this.boss = boss;
   }
 
   spawn(context) {

@@ -28,8 +28,8 @@ export class Projectile {
       Math.pow(this.target.x - this.x, 2) + Math.pow(this.target.y - this.y, 2)
     );
 
-    const x = (this.target.x - this.x) / diagonal;
-    const y = (this.target.y - this.y) / diagonal;
+    const x = (this.target.x - this.x + this.target.width / 2) / diagonal;
+    const y = (this.target.y - this.y + this.target.height / 2) / diagonal;
 
     this.x += x * this.speed;
     this.y += y * this.speed;
@@ -47,16 +47,8 @@ export class Projectile {
 
   checkCollision(target) {
     if (
-      between(
-        this.x,
-        target.x - target.width / 2,
-        target.x + target.width / 2
-      ) &&
-      between(
-        this.y,
-        target.y - target.height / 2,
-        target.y + target.height / 2
-      )
+      between(this.x, target.x - target.width, target.x + target.width) &&
+      between(this.y, target.y - target.height, target.y + target.height)
     ) {
       target.life -= this.power;
       this.printDamage(this.context);
