@@ -183,9 +183,9 @@ $money.innerHTML = player.money.toLocaleString("pt-BR", {
   currency: "BRL",
 });
 
-$lifeStealButton.innerHTML = `LifeSteal: ${player.lifeSteal.toFixed(
-  3
-)} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
+$lifeStealButton.innerHTML = `LifeSteal: ${
+  player.lifeSteal
+} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
   style: "currency",
   currency: "BRL",
 })}`;
