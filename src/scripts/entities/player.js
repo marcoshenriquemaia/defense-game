@@ -23,6 +23,7 @@ export class Player {
     gunsQuantity = 1,
     life = 100,
     fullLife = 100,
+    lifeSteal = 0.025,
   }) {
     this.width = width;
     this.height = height;
@@ -37,7 +38,7 @@ export class Player {
     this.gunsQuantity = gunsQuantity;
     this.life = life;
     this.fullLife = fullLife;
-    this.lifeSteal = 0.025;
+    this.lifeSteal = lifeSteal;
     this.status = "alive";
 
     this.updateLife(this.life);
