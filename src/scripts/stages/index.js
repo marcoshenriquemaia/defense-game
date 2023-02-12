@@ -50,7 +50,7 @@ export const STAGES = colorSequence.map((color, index) => {
         quantity: max((index + 1) * 3, 100),
         width: 32,
         height: 32,
-        speed: Math.pow(index + 1, 2.5) / 100 + 1,
+        speed: Math.pow(index + 1, 2) / 100 + 1,
         color,
         power: index + 1,
         initialLife: Math.log(index + 1) * index + 1,
