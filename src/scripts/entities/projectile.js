@@ -47,8 +47,10 @@ export class Projectile {
 
   checkCollision(target) {
     if (
-      between(this.x, target.x - target.width, target.x + target.width) &&
-      between(this.y, target.y - target.height, target.y + target.height)
+      target.x + target.width >= this.x &&
+      target.x <= this.x + this.width &&
+      target.y + target.height >= this.y &&
+      target.y <= this.y + this.height
     ) {
       target.life -= this.power;
       this.printDamage(this.context);

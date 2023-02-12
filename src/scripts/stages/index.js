@@ -70,7 +70,7 @@ export const STAGES = colorSequence.map((color, index) => {
         respawnTime: 1000 / (index + 1),
         reward: Math.pow(index + 2, 1.3) + 1,
       },
-      {
+      index && {
         quantity: 2,
         width: 100,
         height: 100,
