@@ -37,7 +37,7 @@ export class Player {
     this.gunsQuantity = gunsQuantity;
     this.life = life;
     this.fullLife = fullLife;
-    this.lifeSteal = 0.2;
+    this.lifeSteal = 0.025;
     this.status = "alive";
 
     this.updateLife(this.life);

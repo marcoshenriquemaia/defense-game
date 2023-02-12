@@ -138,6 +138,39 @@ body {
   font-weight: bold;
 }
 
+.info-modal{
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  display: none;
+  flex-direction: column;
+  padding: 15px;
+  gap: 20px;
+}
+
+.active{
+  display: flex;
+}
+
+.info-modal-box{
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.info-name{
+  margin-top: 15px;
+}
+
+
 @keyframes damage {
   0% {
     opacity: 0;

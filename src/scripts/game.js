@@ -24,7 +24,7 @@ export class World {
   }
 
   spawnMonsters() {
-    this.stage.monsters.forEach((monster) => {
+    this.stage?.monsters?.forEach((monster) => {
       for (let i = 0; i < monster.quantity; i++) {
         const newMonster = new Monster({
           x: randomNumber(0, this.canvas.width, -500),
@@ -151,21 +151,45 @@ export class World {
   }
 
   updateInfo() {
-    const $life = document.querySelector(".info-life");
-    const $attack = document.querySelector(".info-attack");
-    const $speed = document.querySelector(".info-speed");
-    const $reward = document.querySelector(".info-reward");
     const $name = document.querySelector(".info-name");
+    const $infoModal = document.querySelector(".info-modal");
 
-    $life.textContent = "Life:" + Math.ceil(this.stage.monsters[0].life);
-    $attack.textContent = "Attack:" + this.stage.monsters[0].power;
-    $speed.textContent = "Speed:" + this.stage.monsters[0].speed.toFixed(2);
-    $reward.textContent =
-      "Reward:" +
-      this.stage.monsters[0].reward.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      });
+    $infoModal.innerHTML = "";
+
+    this.stage?.monsters?.forEach((monster) => {
+      console.log("monster", monster);
+      const $box = document.createElement("li");
+      $box.classList.add("info-modal-box");
+
+      const $life = document.createElement("p");
+      $life.classList.add("info-modal-life");
+      $life.textContent = "Life:" + monster.life.toFixed(2);
+
+      const $attack = document.createElement("p");
+      $attack.classList.add("info-modal-attack");
+      $attack.textContent = "Attack:" + monster.power;
+
+      const $speed = document.createElement("p");
+      $speed.classList.add("info-modal-speed");
+      $speed.textContent = "Speed:" + monster.speed.toFixed(2);
+
+      const $reward = document.createElement("p");
+      $reward.classList.add("info-modal-reward");
+      $reward.textContent =
+        "Reward:" +
+        monster.reward.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+
+      $box.appendChild($life);
+      $box.appendChild($attack);
+      $box.appendChild($speed);
+      $box.appendChild($reward);
+
+      $infoModal.appendChild($box);
+    });
+
     $name.textContent = "Name:" + this.stage.name;
   }
 }

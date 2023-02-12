@@ -9,6 +9,7 @@ const $gunButton = document.querySelector(".button-gun");
 const $money = document.querySelector(".money");
 const $lifeStealButton = document.querySelector(".button-life-steal");
 const $lifeButton = document.querySelector(".button-life");
+const $infoButton = document.querySelector(".info-button");
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
@@ -40,8 +41,8 @@ const world = new World({
 const GUN_PRICE = 50000;
 const POWER_PRICE = 100;
 const SPEED_PRICE = 3;
-const LIFE_STEAL_VALUE = Number((player.lifeSteal * 100 * 200).toFixed(2));
-const LIFE_PRICE = 10;
+const LIFE_STEAL_VALUE = Number((player.lifeSteal * 100 * 500).toFixed(2));
+const LIFE_PRICE = 1000;
 
 const printStages = () => {
   const $stages = document.querySelector(".stages");
@@ -125,7 +126,7 @@ $gunButton.addEventListener("click", () => {
 $lifeStealButton.addEventListener("click", () => {
   if (player.money >= LIFE_STEAL_VALUE) {
     player.money -= LIFE_STEAL_VALUE;
-    player.lifeSteal += 0.1;
+    player.lifeSteal += 0.025;
   }
 
   priceTransition({
@@ -145,7 +146,7 @@ $lifeStealButton.addEventListener("click", () => {
 $lifeButton.addEventListener("click", () => {
   if (player.money >= LIFE_PRICE * player.fullLife) {
     player.money -= LIFE_PRICE * player.fullLife;
-    player.fullLife += 1;
+    player.fullLife += 100;
   }
 
   priceTransition({
@@ -157,6 +158,11 @@ $lifeButton.addEventListener("click", () => {
   $lifeButton.innerHTML = `Life: ${player.fullLife} ${(
     LIFE_PRICE * player.fullLife
   ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+});
+
+$infoButton.addEventListener("click", () => {
+  const $info = document.querySelector(".info-modal");
+  $info.classList.toggle("active");
 });
 
 $speedButton.innerHTML = `Speed: ${player.attackSpeed} ${getSpeedPrice(
@@ -178,7 +184,7 @@ $money.innerHTML = player.money.toLocaleString("pt-BR", {
 });
 
 $lifeStealButton.innerHTML = `LifeSteal: ${player.lifeSteal.toFixed(
-  1
+  3
 )} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
   style: "currency",
   currency: "BRL",
