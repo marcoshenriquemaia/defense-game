@@ -170,6 +170,11 @@ body {
   margin-top: 15px;
 }
 
+.disabled{
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 
 @keyframes damage {
   0% {

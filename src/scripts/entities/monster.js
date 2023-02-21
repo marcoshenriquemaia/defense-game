@@ -1,3 +1,5 @@
+import { printStages } from "../index.js";
+import { stages } from "../stages/index.js";
 import { between } from "../utils/between.js";
 
 export class Monster {
@@ -56,10 +58,15 @@ export class Monster {
   }
 
   draw(context) {
+    const lifeBarWidth = this.width * (this.life / this.initialLife);
     context.fillStyle = this.color;
     context.fillRect(this.x, this.y, this.width, this.height);
+    context.fillStyle = "red";
+    if (lifeBarWidth > 0) context.fillRect(this.x, this.y, lifeBarWidth, 5);
     if (this.life <= 0) {
       this.status = "dead";
+      this.boss && stages.enableNextStagesSinceCurrentBoss();
+      this.boss && printStages();
     }
   }
 

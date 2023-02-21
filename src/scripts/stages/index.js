@@ -40,51 +40,110 @@ const colorSequence = [
   "darkslategray",
   "darkturquoise",
   "deeppink",
+  "deepskyblue",
+  "dimgray",
+  "dodgerblue",
 ];
 
 export const STAGES = colorSequence.map((color, index) => {
   return {
     name: `Stage ${index + 1}`,
-    monsters: [
-      {
-        quantity: max((index + 1) * 3, 100),
-        width: 32,
-        height: 32,
-        speed: Math.pow(index + 1, 2) / 100 + 1,
-        color,
-        power: index + 1,
-        initialLife: Math.log(index + 1) * index + 1,
-        life: Math.log(index + 1) * index + 1,
-        respawnTime: 1000 / (index + 1),
-        reward: Math.pow(index + 1, 1.3) + 1,
-      },
-      {
-        quantity: max((index + 1) * 1.5, 20),
-        width: 50,
-        height: 50,
-        speed: Math.pow(index + 1, 1.5) / 100 + 1,
-        color,
-        power: index + 1,
-        initialLife: Math.log(index + 4) * (index + 1) * 2,
-        life: Math.log(index + 4) * (index + 1) * 2,
-        respawnTime: 1000 / (index + 1),
-        reward: Math.pow(index + 2, 1.3) + 1,
-      },
-      index && {
-        quantity: 2,
-        width: 100,
-        height: 100,
-        speed: 0.5,
-        color,
-        power: Math.pow(index + 2, 2),
-        initialLife: Math.pow(index + 2, 3),
-        life: Math.pow(index + 2, 3),
-        respawnTime: 10000 / (index + 1),
-        reward: Math.pow(index + 2, 3),
-        boss: true,
-      },
-    ].filter(Boolean),
+    bosStage: index % 5 === 0 && !!index,
+    active: index < 6,
+    monsters: (index % 5 === 0 && index
+      ? [
+          {
+            quantity: 1,
+            width: 500,
+            height: 500,
+            speed: 0.1,
+            color,
+            power: 99999999999999999999999999,
+            initialLife: Math.pow(index + 4, 4),
+            life: Math.pow(index + 4, 4),
+            respawnTime: 10000 / (index + 1),
+            reward: Math.pow(index + 2, 4),
+            boss: true,
+            x: $canvas.width,
+            y: $canvas.height,
+          },
+        ]
+      : [
+          {
+            quantity: max((index + 1) * 3, 100),
+            width: 32,
+            height: 32,
+            speed: Math.pow(index + 1, 2) / 100 + 1,
+            color,
+            power: index + 1,
+            initialLife: Math.log(index + 1) * index + 1,
+            life: Math.log(index + 1) * index + 1,
+            respawnTime: 1000 / (index + 1),
+            reward: Math.pow(index + 1, 1.3) + 1,
+          },
+          {
+            quantity: max((index + 1) * 1.5, 20),
+            width: 50,
+            height: 50,
+            speed: Math.pow(index + 1, 1.5) / 100 + 1,
+            color,
+            power: index + 1,
+            initialLife: Math.log(index + 4) * (index + 1) * 2,
+            life: Math.log(index + 4) * (index + 1) * 2,
+            respawnTime: 1000 / (index + 1),
+            reward: Math.pow(index + 2, 1.3) + 1,
+          },
+          index && {
+            quantity: 2,
+            width: 100,
+            height: 100,
+            speed: 0.5,
+            color,
+            power: Math.pow(index + 2, 2),
+            initialLife: Math.pow(index + 2, 3),
+            life: Math.pow(index + 2, 3),
+            respawnTime: 10000 / (index + 1),
+            reward: Math.pow(index + 2, 3),
+          },
+        ]
+    ).filter(Boolean),
   };
 });
 
-console.log("STAGES", STAGES);
+export class Stages {
+  constructor() {
+    const localStorageStages = JSON.parse(localStorage.getItem("stages"));
+
+    this.stages = localStorageStages || STAGES;
+  }
+
+  getStage(index) {
+    this.saveStagesOnLocalStorage();
+    return this.stages[index];
+  }
+
+  get all() {
+    this.saveStagesOnLocalStorage();
+    return this.stages;
+  }
+
+  enableNextStagesSinceCurrentBoss() {
+    const nextBossStage = this.stages.find(
+      (stage) => stage.bosStage && !stage.active
+    );
+    const nextBossStageIndex = this.stages.indexOf(nextBossStage);
+    this.stages.forEach((stage, index) => {
+      if (index < nextBossStageIndex) {
+        stage.active = true;
+      }
+    });
+  }
+
+  saveStagesOnLocalStorage() {
+    localStorage.setItem("stages", JSON.stringify(this.stages));
+  }
+}
+
+export const stages = new Stages();
+
+console.log(stages.all);

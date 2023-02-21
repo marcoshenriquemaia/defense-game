@@ -1,5 +1,5 @@
 import { Monster } from "./entities/monster.js";
-import { STAGES } from "./stages/index.js";
+import { stages, STAGES } from "./stages/index.js";
 import priceTransition from "./utils/priceTransition.js";
 import { randomNumber } from "./utils/randomNumber.js";
 
@@ -10,13 +10,13 @@ export class World {
     this.player = player;
     this.monsters = [];
     this.projectiles = [];
-    this.stage = STAGES[0];
+    this.stage = stages.getStage(0);
 
     this.updateInfo();
   }
 
   changeStage(index, notDraw) {
-    this.stage = STAGES[index];
+    this.stage = stages.getStage(index);
     this.monsters = [];
     this.spawnMonsters();
     !notDraw && this.draw(this.stage.name);

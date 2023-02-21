@@ -1,6 +1,6 @@
 import { Player } from "./entities/player.js";
 import { World } from "./game.js";
-import { STAGES } from "./stages/index.js";
+import { stages, STAGES } from "./stages/index.js";
 import priceTransition from "./utils/priceTransition.js";
 
 const $speedButton = document.querySelector(".button-speed");
@@ -44,18 +44,22 @@ const SPEED_PRICE = 3;
 const LIFE_STEAL_VALUE = Number((player.lifeSteal * 100 * 500).toFixed(2));
 const LIFE_PRICE = 1000;
 
-const printStages = () => {
+export const printStages = () => {
   const $stages = document.querySelector(".stages");
 
-  STAGES.forEach((stage, index) => {
+  $stages.innerHTML = "";
+
+  stages.all.forEach((stage, index) => {
     const $stageButton = document.createElement("button");
     $stageButton.classList.add(`stage-button-${index + 1}`);
     $stageButton.classList.add("stage-button");
-    $stageButton.textContent = stage.name;
+    !stage.active && $stageButton.classList.add("disabled");
+    $stageButton.textContent = stage.bosStage ? "Boss" : stage.name;
 
     $stages.appendChild($stageButton);
 
     $stageButton.addEventListener("click", () => {
+      if ($stageButton.classList.contains("active")) return;
       world.changeStage(index);
 
       [...document.querySelectorAll(".stage-button")].forEach(($button) => {
