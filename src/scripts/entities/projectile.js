@@ -62,7 +62,7 @@ export class Projectile {
   printDamage(context) {
     if (this.target.life <= 0) {
       this.target.murdered = true;
-      damage(this.target.x, this.target.y, this.power, context);
+      damage(this.target.x, this.target.y, this.power, context, this.target.id);
     }
     if (
       between(
@@ -76,7 +76,7 @@ export class Projectile {
         this.target.y + this.target.width
       )
     ) {
-      damage(this.target.x, this.target.y, this.power, context);
+      damage(this.target.x, this.target.y, this.power, context, this.target.id);
     }
   }
 }

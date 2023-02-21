@@ -38,7 +38,7 @@ const world = new World({
   context,
 });
 
-const GUN_PRICE = 50000;
+const GUN_PRICE = 20000;
 const POWER_PRICE = 100;
 const SPEED_PRICE = 3;
 const LIFE_STEAL_VALUE = Number((player.lifeSteal * 100 * 500).toFixed(2));
@@ -116,8 +116,8 @@ $powerButton.addEventListener("click", () => {
 });
 
 $gunButton.addEventListener("click", () => {
-  if (player.money >= GUN_PRICE * player.gunsQuantity) {
-    player.money -= GUN_PRICE * player.gunsQuantity;
+  if (player.money >= Math.pow(GUN_PRICE * player.gunsQuantity, 1.2)) {
+    player.money -= Math.pow(GUN_PRICE * player.gunsQuantity, 1.2);
     player.gunsQuantity += 1;
   }
 
@@ -127,8 +127,9 @@ $gunButton.addEventListener("click", () => {
     duration: 300,
   });
 
-  $gunButton.innerHTML = `Guns: ${player.gunsQuantity} ${(
-    GUN_PRICE * player.gunsQuantity
+  $gunButton.innerHTML = `Guns: ${player.gunsQuantity} ${Math.pow(
+    GUN_PRICE * player.gunsQuantity,
+    1.2
   ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 });
 
@@ -183,8 +184,9 @@ $powerButton.innerHTML = `Power: ${player.power} ${Math.pow(
   1.2
 ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 
-$gunButton.innerHTML = `Guns: ${player.gunsQuantity} ${(
-  GUN_PRICE * player.gunsQuantity
+$gunButton.innerHTML = `Guns: ${player.gunsQuantity} ${Math.pow(
+  GUN_PRICE * player.gunsQuantity,
+  1.2
 ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 
 $money.innerHTML = player.money.toLocaleString("pt-BR", {
@@ -204,3 +206,37 @@ $lifeButton.innerHTML = `Life: ${player.life} ${(
 ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 
 printStages();
+
+const $buttonList = document.querySelectorAll(".button");
+
+$buttonList.forEach(($button) => {
+  $button.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    const scrollClick = e.which == 2;
+
+    if (!scrollClick) return;
+
+    if ($button.classList.contains("active-buy")) {
+      $button.classList.remove("active-buy");
+      return;
+    }
+
+    $buttonList.forEach(($button) => {
+      $button.classList.remove("active-buy");
+    });
+
+    $button.classList.add("active-buy");
+  });
+});
+
+const autoBuy = () => {
+  const $button = document.querySelector(".active-buy");
+
+  if ($button) {
+    $button.click();
+  }
+
+  setTimeout(autoBuy, 100);
+};
+
+autoBuy();

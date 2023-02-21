@@ -19,6 +19,7 @@ export class Monster {
     player,
     boss = false,
   }) {
+    this.id = Math.random();
     this.width = width;
     this.height = height;
     this.color = color;

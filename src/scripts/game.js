@@ -1,5 +1,5 @@
 import { Monster } from "./entities/monster.js";
-import { stages, STAGES } from "./stages/index.js";
+import { stages } from "./stages/index.js";
 import priceTransition from "./utils/priceTransition.js";
 import { randomNumber } from "./utils/randomNumber.js";
 

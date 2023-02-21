@@ -175,6 +175,10 @@ body {
   pointer-events: none;
 }
 
+.active-buy{
+  border: 1px solid red;
+}
+
 
 @keyframes damage {
   0% {
