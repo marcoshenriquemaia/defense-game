@@ -140,9 +140,9 @@ export class Stages {
     );
     const nextBossStageIndex = this.stages.indexOf(nextBossStage);
 
-    this.currentStage.bossKilled = true;
-
     if (this.currentStage.bossKilled) return;
+
+    this.currentStage.bossKilled = true;
 
     this.stages.forEach((stage, index) => {
       if (index <= nextBossStageIndex) {
