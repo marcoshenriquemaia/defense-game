@@ -50,6 +50,7 @@ export const STAGES = colorSequence.map((color, index) => {
     name: `Stage ${index + 1}`,
     bosStage: index % 5 === 0 && !!index,
     active: index < 6,
+    bossKilled: false,
     monsters: (index % 5 === 0 && index
       ? [
           {
@@ -62,7 +63,7 @@ export const STAGES = colorSequence.map((color, index) => {
             initialLife: Math.pow(index + 4, 4),
             life: Math.pow(index + 4, 4),
             respawnTime: 10000 / (index + 1),
-            reward: Math.pow(index + 2, 4),
+            reward: Math.pow(index + 6, 4),
             boss: true,
             x: $canvas.width,
             y: $canvas.height,
@@ -115,10 +116,12 @@ export class Stages {
     const localStorageStages = JSON.parse(localStorage.getItem("stages"));
 
     this.stages = localStorageStages || STAGES;
+    this.currentStageIndex = 0;
   }
 
   getStage(index) {
     this.saveStagesOnLocalStorage();
+    this.currentStageIndex = index;
     return this.stages[index];
   }
 
@@ -127,13 +130,22 @@ export class Stages {
     return this.stages;
   }
 
+  get currentStage() {
+    return this.stages[this.currentStageIndex];
+  }
+
   enableNextStagesSinceCurrentBoss() {
     const nextBossStage = this.stages.find(
       (stage) => stage.bosStage && !stage.active
     );
     const nextBossStageIndex = this.stages.indexOf(nextBossStage);
+
+    this.currentStage.bossKilled = true;
+
+    if (this.currentStage.bossKilled) return;
+
     this.stages.forEach((stage, index) => {
-      if (index < nextBossStageIndex) {
+      if (index <= nextBossStageIndex) {
         stage.active = true;
       }
     });

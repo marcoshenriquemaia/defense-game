@@ -109,16 +109,14 @@ export class Player {
 
     return [...new Array(this.gunsQuantity)]
       .map((_, index) => {
-        if (!target[index]) return undefined;
-
         const projectile = new Projectile({
-          x: this.canvas.width / 2 - this.width / 4,
-          y: this.canvas.height / 2 - this.height / 4,
+          x: this.canvas.width / 2 - this.width / 4 + Math.random() * 10,
+          y: this.canvas.height / 2 - this.height / 4 + Math.random() * 10,
           color:
             projectileColorSequence[index % projectileColorSequence.length],
           power: this.power,
           speed: 5,
-          target: target[index],
+          target: target[index % target.length],
           context: this.context,
         });
 

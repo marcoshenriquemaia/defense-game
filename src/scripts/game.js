@@ -24,6 +24,8 @@ export class World {
   }
 
   spawnMonsters() {
+    if (stages.currentStage.bossKilled) return;
+
     this.stage?.monsters?.forEach((monster) => {
       for (let i = 0; i < monster.quantity; i++) {
         const newMonster = new Monster({
@@ -72,6 +74,7 @@ export class World {
         this.monsters.splice(this.monsters.indexOf(monster), 1);
         setTimeout(() => {
           if (stageName !== this.stage.name) return;
+          if (stages.currentStage.bossKilled && monster.boss) return;
 
           this.monsters.push(newMonster);
         }, newMonster.respawnTime);

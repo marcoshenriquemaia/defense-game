@@ -49,12 +49,17 @@ export const printStages = () => {
 
   $stages.innerHTML = "";
 
-  stages.all.forEach((stage, index) => {
+  stages.all.forEach((currentStage, index) => {
     const $stageButton = document.createElement("button");
     $stageButton.classList.add(`stage-button-${index + 1}`);
     $stageButton.classList.add("stage-button");
-    !stage.active && $stageButton.classList.add("disabled");
-    $stageButton.textContent = stage.bosStage ? "Boss" : stage.name;
+    !currentStage.active && $stageButton.classList.add("disabled");
+    currentStage.bosStage && $stageButton.classList.add("boss");
+    currentStage.bossKilled && $stageButton.classList.add("killed");
+    stages.currentStageIndex === index && $stageButton.classList.add("active");
+    $stageButton.textContent = currentStage.bosStage
+      ? "Boss"
+      : currentStage.name;
 
     $stages.appendChild($stageButton);
 
@@ -130,7 +135,7 @@ $gunButton.addEventListener("click", () => {
 $lifeStealButton.addEventListener("click", () => {
   if (player.money >= LIFE_STEAL_VALUE) {
     player.money -= LIFE_STEAL_VALUE;
-    player.lifeSteal += 0.025;
+    player.lifeSteal += 0.01;
   }
 
   priceTransition({
@@ -187,9 +192,9 @@ $money.innerHTML = player.money.toLocaleString("pt-BR", {
   currency: "BRL",
 });
 
-$lifeStealButton.innerHTML = `LifeSteal: ${
-  player.lifeSteal
-} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
+$lifeStealButton.innerHTML = `LifeSteal: ${player.lifeSteal.toFixed(
+  3
+)} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
   style: "currency",
   currency: "BRL",
 })}`;

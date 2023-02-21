@@ -155,7 +155,7 @@ body {
 }
 
 .active{
-  display: flex;
+  display: inline;
 }
 
 .info-modal-box{
