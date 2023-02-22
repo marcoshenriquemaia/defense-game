@@ -60,8 +60,8 @@ export const STAGES = colorSequence.map((color, index) => {
             speed: 0.1,
             color,
             power: 99999999999999999999999999,
-            initialLife: Math.pow(index + 8, 4),
-            life: Math.pow(index + 8, 4),
+            initialLife: Math.pow(index + 9, 4 + index * 0.01),
+            life: Math.pow(index + 9, 4 + index * 0.01),
             respawnTime: 10000 / (index + 1),
             reward: Math.pow(index + 10, 4),
             boss: true,
@@ -71,7 +71,7 @@ export const STAGES = colorSequence.map((color, index) => {
         ]
       : [
           {
-            quantity: max((index + 1) * 3, 100),
+            quantity: max((index + 1) * 7, 200),
             width: 32,
             height: 32,
             speed: Math.pow(index + 1, 2) / 100 + 1,
@@ -83,7 +83,7 @@ export const STAGES = colorSequence.map((color, index) => {
             reward: Math.pow(index + 1, 1.3) + 1,
           },
           {
-            quantity: max((index + 1) * 1.5, 20),
+            quantity: max((index + 1) * 3, 100),
             width: 50,
             height: 50,
             speed: Math.pow(index + 1, 1.5) / 100 + 1,
