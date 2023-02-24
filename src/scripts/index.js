@@ -7,14 +7,13 @@ const $speedButton = document.querySelector(".button-speed");
 const $powerButton = document.querySelector(".button-power");
 const $gunButton = document.querySelector(".button-gun");
 const $money = document.querySelector(".money");
-const $lifeStealButton = document.querySelector(".button-life-steal");
 const $lifeButton = document.querySelector(".button-life");
 const $infoButton = document.querySelector(".info-button");
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
-canvas.width = window.outerWidth;
+canvas.width = window.outerWidth - 50;
 canvas.height =
   window.outerWidth > 1024 ? window.innerHeight - 100 : window.outerHeight;
 
@@ -41,7 +40,6 @@ const world = new World({
 const GUN_PRICE = 20000;
 const POWER_PRICE = 100;
 const SPEED_PRICE = 3;
-const LIFE_STEAL_VALUE = Number((player.lifeSteal * 100 * 500).toFixed(2));
 const LIFE_PRICE = 1000;
 
 export const printStages = () => {
@@ -133,26 +131,6 @@ $gunButton.addEventListener("click", () => {
   ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 });
 
-$lifeStealButton.addEventListener("click", () => {
-  if (player.money >= LIFE_STEAL_VALUE) {
-    player.money -= LIFE_STEAL_VALUE;
-    player.lifeSteal += 0.01;
-  }
-
-  priceTransition({
-    $element: $money,
-    newPrice: player.money,
-    duration: 300,
-  });
-
-  $lifeStealButton.innerHTML = `Life Steal: ${
-    player.lifeSteal
-  } ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  })}`;
-});
-
 $lifeButton.addEventListener("click", () => {
   if (player.money >= LIFE_PRICE * player.fullLife) {
     player.money -= LIFE_PRICE * player.fullLife;
@@ -194,15 +172,8 @@ $money.innerHTML = player.money.toLocaleString("pt-BR", {
   currency: "BRL",
 });
 
-$lifeStealButton.innerHTML = `LifeSteal: ${player.lifeSteal.toFixed(
-  3
-)} ${LIFE_STEAL_VALUE.toLocaleString("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-})}`;
-
-$lifeButton.innerHTML = `Life: ${player.life} ${(
-  LIFE_PRICE * player.life
+$lifeButton.innerHTML = `Life: ${player.fullLife} ${(
+  LIFE_PRICE * player.fullLife
 ).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 
 printStages();

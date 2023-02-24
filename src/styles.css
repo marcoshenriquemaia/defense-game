@@ -34,6 +34,8 @@ body {
   width: fit-content;
   height: 100%;
   overflow: hidden;
+  margin: 0 auto;
+  margin-top: 10px;
 }
 
 .money{
@@ -152,10 +154,11 @@ body {
   flex-direction: column;
   padding: 15px;
   gap: 20px;
+  overflow: auto;
 }
 
 .active{
-  display: inline;
+  display: flex;
 }
 
 .info-modal-box{
