@@ -60,10 +60,14 @@ export const STAGES = colorSequence.map((color, index) => {
             speed: 0.1,
             color,
             power: 99999999999999999999999999,
-            initialLife: Math.pow(index + 9, 4 + index * 0.01),
-            life: Math.pow(index + 9, 4 + index * 0.01),
+            initialLife:
+              Math.pow(index + 9, 4 + index * 0.01) +
+              Math.pow((index / 5 - 1) * 500, 2),
+            life:
+              Math.pow(index + 9, 4 + index * 0.01) +
+              Math.pow((index / 5 - 1) * 500, 2),
             respawnTime: 10000 / (index + 1),
-            reward: Math.pow(index + 10, 4),
+            reward: Math.pow((index / 5) * 500, 2),
             boss: true,
             x: $canvas.width,
             y: $canvas.height,

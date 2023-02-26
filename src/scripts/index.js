@@ -1,6 +1,7 @@
 import { Player } from "./entities/player.js";
 import { World } from "./game.js";
-import { stages, STAGES } from "./stages/index.js";
+import { stages } from "./stages/index.js";
+import { isDev } from "./utils/isDev.js";
 import priceTransition from "./utils/priceTransition.js";
 
 const $speedButton = document.querySelector(".button-speed");
@@ -23,13 +24,25 @@ const getSpeedPrice = (speed) => {
 
 const userStorage = localStorage.getItem("user");
 
-const player = new Player(
-  userStorage
-    ? JSON.parse(userStorage)
-    : {
-        context,
-      }
-);
+const devPlayer = new Player({
+  context,
+  power: 50,
+  money: 100000000,
+  life: 100000000,
+  attackSpeed: 20,
+  speed: 0.1,
+  gunsQuantity: 1,
+});
+
+const player = isDev()
+  ? devPlayer
+  : new Player(
+      userStorage
+        ? JSON.parse(userStorage)
+        : {
+            context,
+          }
+    );
 
 const world = new World({
   player,
