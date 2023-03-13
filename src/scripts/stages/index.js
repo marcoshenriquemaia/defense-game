@@ -81,8 +81,12 @@ export const STAGES = colorSequence.map((color, index) => {
             speed: Math.pow(index + 1, 2) / 100 + 1,
             color,
             power: index + 1,
-            initialLife: Math.log(index + 1) * index + 1,
-            life: Math.log(index + 1) * index + 1,
+            initialLife:
+              (Math.log(index + 1) * index + 1) *
+              Math.ceil((index ? index : 1) / 5),
+            life:
+              (Math.log(index + 1) * index + 1) *
+              Math.ceil((index ? index : 1) / 5),
             respawnTime: 1000 / (index + 1),
             reward: Math.pow(index + 1, 1.3) + 1,
           },
@@ -93,8 +97,16 @@ export const STAGES = colorSequence.map((color, index) => {
             speed: Math.pow(index + 1, 1.5) / 100 + 1,
             color,
             power: index + 1,
-            initialLife: Math.log(index + 4) * (index + 1) * 2,
-            life: Math.log(index + 4) * (index + 1) * 2,
+            initialLife:
+              Math.log(index + 4) *
+              (index + 1) *
+              2 *
+              Math.ceil((index ? index : 1) / 5),
+            life:
+              Math.log(index + 4) *
+              (index + 1) *
+              2 *
+              Math.ceil((index ? index : 1) / 5),
             respawnTime: 1000 / (index + 1),
             reward: Math.pow(index + 2, 1.3) + 1,
           },
@@ -105,8 +117,9 @@ export const STAGES = colorSequence.map((color, index) => {
             speed: 0.5,
             color,
             power: Math.pow(index + 2, 2),
-            initialLife: Math.pow(index + 2, 3),
-            life: Math.pow(index + 2, 3),
+            initialLife:
+              Math.pow(index + 2, 3) * Math.ceil((index ? index : 1) / 5),
+            life: Math.pow(index + 2, 3) * Math.ceil((index ? index : 1) / 5),
             respawnTime: 10000 / (index + 1),
             reward: Math.pow(index + 2, 3),
           },
