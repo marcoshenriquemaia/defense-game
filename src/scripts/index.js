@@ -53,7 +53,7 @@ const world = new World({
 const GUN_PRICE = 20000;
 const POWER_PRICE = 100;
 const SPEED_PRICE = 3;
-const LIFE_PRICE = 1000;
+const LIFE_PRICE = 10;
 
 export const printStages = () => {
   const $stages = document.querySelector(".stages");
@@ -147,7 +147,7 @@ $gunButton.addEventListener("click", () => {
 $lifeButton.addEventListener("click", () => {
   if (player.money >= LIFE_PRICE * player.fullLife) {
     player.money -= LIFE_PRICE * player.fullLife;
-    player.fullLife += 100;
+    player.fullLife += 1;
   }
 
   priceTransition({

@@ -75,7 +75,7 @@ export const STAGES = colorSequence.map((color, index) => {
         ]
       : [
           {
-            quantity: max((index + 1) * 7, 200),
+            quantity: max((index + 1) * 10, 200),
             width: 32,
             height: 32,
             speed: Math.pow(index + 1, 2) / 100 + 1,
@@ -91,7 +91,7 @@ export const STAGES = colorSequence.map((color, index) => {
             reward: Math.pow(index + 1, 1.3) + 1,
           },
           {
-            quantity: max((index + 1) * 3, 100),
+            quantity: max((index + 1) * 5, 100),
             width: 50,
             height: 50,
             speed: Math.pow(index + 1, 1.5) / 100 + 1,
@@ -111,7 +111,7 @@ export const STAGES = colorSequence.map((color, index) => {
             reward: Math.pow(index + 2, 1.3) + 1,
           },
           index && {
-            quantity: 2,
+            quantity: Math.ceil(index / 2),
             width: 100,
             height: 100,
             speed: 0.5,

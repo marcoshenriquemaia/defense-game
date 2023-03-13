@@ -115,7 +115,7 @@ export class Player {
           color:
             projectileColorSequence[index % projectileColorSequence.length],
           power: this.power,
-          speed: 5,
+          speed: 10,
           target: target[index % target.length],
           context: this.context,
         });

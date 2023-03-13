@@ -74,7 +74,10 @@ export class World {
         this.monsters.splice(this.monsters.indexOf(monster), 1);
         setTimeout(() => {
           if (stageName !== this.stage.name) return;
-          if (stages.currentStage.bossKilled && monster.boss) return;
+          if (stages.currentStage.bossKilled && monster.boss) {
+            this.player.gunsQuantity += 1;
+            return;
+          }
 
           this.monsters.push(newMonster);
         }, newMonster.respawnTime);
