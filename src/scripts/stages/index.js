@@ -62,10 +62,10 @@ export const STAGES = colorSequence.map((color, index) => {
             power: 99999999999999999999999999,
             initialLife:
               Math.pow(index + 9, 4 + index * 0.01) +
-              Math.pow((index / 5 - 1) * 500, 2.2),
+              Math.pow((index / 5 - 1) * 500, 2.1),
             life:
               Math.pow(index + 9, 4 + index * 0.01) +
-              Math.pow((index / 5 - 1) * 500, 2.2),
+              Math.pow((index / 5 - 1) * 500, 2.1),
             respawnTime: 10000 / (index + 1),
             reward: Math.pow((index / 5) * 500, 2) * 2,
             boss: true,
