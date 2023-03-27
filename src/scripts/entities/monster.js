@@ -62,6 +62,7 @@ export class Monster {
     const lifeBarWidth = this.width * (this.life / this.initialLife);
     context.fillStyle = this.color;
     context.fillRect(this.x, this.y, this.width, this.height);
+
     context.fillStyle = "red";
     if (lifeBarWidth > 0) context.fillRect(this.x, this.y, lifeBarWidth, 5);
     if (this.life <= 0) {

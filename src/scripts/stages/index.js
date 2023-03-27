@@ -62,12 +62,12 @@ export const STAGES = colorSequence.map((color, index) => {
             power: 99999999999999999999999999,
             initialLife:
               Math.pow(index + 9, 4 + index * 0.01) +
-              Math.pow((index / 5 - 1) * 500, 2),
+              Math.pow((index / 5 - 1) * 1000, 2.5),
             life:
               Math.pow(index + 9, 4 + index * 0.01) +
-              Math.pow((index / 5 - 1) * 500, 2),
+              Math.pow((index / 5 - 1) * 1000, 2.5),
             respawnTime: 10000 / (index + 1),
-            reward: Math.pow((index / 5) * 500, 2),
+            reward: Math.pow((index / 5) * 500, 2) * 2,
             boss: true,
             x: $canvas.width,
             y: $canvas.height,
@@ -88,7 +88,10 @@ export const STAGES = colorSequence.map((color, index) => {
               (Math.log(index + 1) * index + 1) *
               Math.ceil((index ? index : 1) / 5),
             respawnTime: 1000 / (index + 1),
-            reward: Math.pow(index + 1, 1.3) + 1,
+            reward:
+              (Math.log(index + 1) * index + 1) *
+              Math.ceil((index ? index : 1) / 5) *
+              2,
           },
           {
             quantity: max((index + 1) * 5, 100),
@@ -108,7 +111,12 @@ export const STAGES = colorSequence.map((color, index) => {
               2 *
               Math.ceil((index ? index : 1) / 5),
             respawnTime: 1000 / (index + 1),
-            reward: Math.pow(index + 2, 1.3) + 1,
+            reward:
+              Math.log(index + 4) *
+              (index + 1) *
+              2 *
+              Math.ceil((index ? index : 1) / 5) *
+              2,
           },
           index && {
             quantity: Math.ceil(index / 2),
@@ -121,7 +129,8 @@ export const STAGES = colorSequence.map((color, index) => {
               Math.pow(index + 2, 3) * Math.ceil((index ? index : 1) / 5),
             life: Math.pow(index + 2, 3) * Math.ceil((index ? index : 1) / 5),
             respawnTime: 10000 / (index + 1),
-            reward: Math.pow(index + 2, 3),
+            reward:
+              Math.pow(index + 2, 3) * Math.ceil((index ? index : 1) / 5) * 4,
           },
         ]
     ).filter(Boolean),
